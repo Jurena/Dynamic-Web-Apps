@@ -9,3 +9,5 @@ Pull repo, Using Node Js validate that all dependencies are properly installed, 
 1. [Ejs](https://www.npmjs.com/package/ejs)
 1. [Express](https://www.npmjs.com/package/express)
 1. [Request](https://www.npmjs.com/package/request)
+### Known Bugs
+Code has portions that should allow for the host to send an image, but unfortunately that is not working
