@@ -1,0 +1,12 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<body class="container"> 
+	<h1> Login to Chat! Just Type You're Username</h1>
+		 <form action="/signin" method="post" >
+	 	username: <input type = "text" name = "username" placeholder="Username"> <br> 
+		<input type="submit" value="Sign Up">
+	</form>
+	<% if(err!==null){ %>
+			<p><%= err %> </p>
+		<%}%>
+
+</body>
