@@ -1,8 +1,8 @@
+"use strict";
 var app = require('express')();
 var http = require('http').createServer(app);
 var io = require('socket.io')(http);
 const express = require('express');
-app.set('view engine', 'ejs');
 var counter = 0; 
 const bodyParser = require('body-parser');
 const request = require('request');
@@ -17,6 +17,8 @@ let userExists = false; //var for checking if user has logged in before
  // app.get('/', function(req, res){
 //   res.sendFile(__dirname + '/index.html');
 // });
+const SocketIOFile = require('socket.io-file');
+
 
 //default page for server is signin page
 app.get('/', function(req, res){
@@ -56,6 +58,17 @@ app.get('/index', function(req,res){
 
 });
 
+//send the socket-io-file javascript over to our client
+app.get('/server.js', (req, res, next) => {
+	return res.sendFile(__dirname + '/views/public/server.js');
+});
+
+app.get('/socket.io-file-client.js', (req, res, next) => {
+	return res.sendFile(__dirname + '/node_modules/socket.io-file-client/socket.io-file-client.js');
+});
+
+
+
 io.on('connection', function(socket){
 	const room = 'private'
 
@@ -72,26 +85,48 @@ io.on('connection', function(socket){
 	}); 
 
 	socket.on('chat message', function(msg){
-		if (msg !== ''){
+		if (msg.length > 0){
 			msg = (username + ": " + msg)
 		}
 		else{
-			msg = ''
+			msg = "";
 		}
 		console.log(msg); 
 		io.emit('chat message', msg);
 	});
 
-	//allow host to send images
-	fs.readFile(__dirname + '/images/Avatar.jpg', function(err, buff){
-		socket.emit('image', {image:true, buffer: buff.toString('base64')})
-	})
+	//create the uploader obj for when users upload files to the server
+	var uploader = new SocketIOFile(socket, {
+		uploadDir: 'data', 
+	 // accepts: ['audio/mpeg', 'audio/mp3'],		// chrome and some of browsers checking mp3 as 'audio/mp3', not 'audio/mpeg'
+		chunkSize: 10240,							// default is 10240(1KB)
+		transmissionDelay: 0,						// delay of each transmission, higher value saves more cpu resources, lower upload speed. default is 0(no delay)
+		overwrite: false, 							// overwrite file if exists, default is true.
+
+	});
+	uploader.on('start', (fileInfo) => {
+		console.log('Start uploading');
+		console.log(fileInfo);
+	});
+
+	uploader.on('stream', (fileInfo) => {
+		console.log(`${fileInfo.wrote} / ${fileInfo.size} byte(s)`);
+	});
+	uploader.on('complete', (fileInfo) => {
+		console.log('Upload Complete.');
+		console.log(fileInfo);
+	});
+	uploader.on('error', (err) => {
+		console.log('Error!', err);
+	});
+	uploader.on('abort', (fileInfo) => {
+		console.log('Aborted: ', fileInfo);
+	});
 
 
 }); 
 
 	
-
 
 http.listen(3000, function(){
   console.log('listening on port :3000');

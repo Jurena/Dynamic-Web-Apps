@@ -8,7 +8,7 @@ const request = require('request');
 const app = express();
 const argv = require('yargs').argv;
 const apiKey = process.env.API_KEY;
-let port = 3000; 
+let port = process.env.PORT || 8080; 
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs')
