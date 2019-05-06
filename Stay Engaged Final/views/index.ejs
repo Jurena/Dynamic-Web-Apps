@@ -1,0 +1,405 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Stay Engaged</title>
+  <meta name="description" content="A site to help you understand who your representatives are!">
+  <meta name="author" content="Joel Urena">
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<style>
+		footer {
+			padding-top: 0px; 
+			margin-top: 0px;
+			padding-bottom: 0px;
+			position:relative-fixed;
+			bottom: 0px; 
+		 	margin-bottom: 0px;
+		}
+		@font-face {
+			font-family: Public;
+			src: url(../public/font/PublicSans-Regular.woff);
+		}
+		body {
+  			font-family:Public;
+		}
+	
+	</style>
+
+
+</head>
+<!--Site Header -->
+<div class="card text-center">
+	<div class="card-body">
+	  <h1 class="card-title title-text"><a class="text-body" href="./">Stay Engaged</a></h1>
+	      <p class="card-text">Helping You Understand Who Represents You.</p>
+	</div>
+</div>	
+<body> 
+	<h3 class="text-center"> Your Reps Below: </h3>
+	<div class="container-fluid">
+		<div class="row row-no-gutters">
+		  <div class="col border" name="rep1">
+		  	<h4 class="text-center"> <%= data[0].title; %> </h4> <br> 
+		  	<% if (typeof data[0].pic !== 'undefined'){  %>
+		  		<img src=<%= data[0].pic;%> alt="Portrait of this representative" class="rounded mx-auto d-block img-fluid" > 
+		  	<% } %>
+		  	<% if (typeof data[0].pic === 'undefined') {  %>
+		  		<img src="../public/img/person.png" alt ="Default avatar picture" class="rounded mx-auto d-block img-fluid" height="60%" width="60%">
+		 	<% } %>
+		  	<br><h5 class="text-center"> <%= data[0].name; %>, <%= data[0].party; %> </h5>
+			  	<ul class="list-inline text-center"> 
+					<li class="list-inline-item"> Contact Information:</li>
+			  		<% if (data[0].phones.length > 0){ %>
+			  			<li class="list-inline-item">|<%= data[0].phones[0] %>|</li>
+			  		<% } %> 
+			  		<% if (typeof data[0].email !== 'undefined'){ %>
+			  			<li class="list-inline-item">|<%=data[0].email%>|</li>
+			  		<% } %> 
+			  		<% if (typeof data[0].social !== 'undefined'){ %>
+			  		<%	const fb = "https://Facebook.com/"; %>
+			  		<%	const youtube = "https://www.youtube.com/user/"; %>
+			  		<%	const twitter = "https://twitter.com/"; %>
+			  		<%	let url; %>
+			  		<%	for (let i=0; i < data[0].social.length; i++){ %>
+			  		<%		console.log(data[0].social[i])%>
+			  		<%		if (data[0].social[i].type == 'Facebook'){ %>
+			  		<%			url = fb + data[0].social[i].id; %>
+			  						<li class="list-inline-item">
+			  							<a href=<%=url%>>
+			  						 	<img src='../public/img/fb.svg' class="image-fluid" height="32px" width="32px" alt="Image of Facebook logo"/></a>
+			  						</li>
+			  		<%		} %>
+			  		<%		if (data[0].social[i].type == 'Twitter'){ %>
+			  		<%			url = twitter + data[0].social[i].id; %>
+			  						<li class="list-inline-item">
+			  							<a href=<%=url%>>
+			  						 	<img src='../public/img/twitter.svg' class="image-fluid" height="32px" width="32px" alt="Image of Twitter logo"/></a>
+			  						</li>
+			  		<%		} %>
+			  		<%		if (data[0].social[i].type == 'Youtube'){ %>
+			  		<%			url = youtube + data[0].social[i].id; %>
+			  						<li class="list-inline-item">
+			  							<a href=<%=url%>>
+			  						 	<img src='../public/img/yt.svg' class="image-fluid" height="32px" width="32px" alt="Image of Youtube logo"/></a>
+			  						</li>
+			  		<%		} %>
+			  		<% } %> 
+			  	<% } %> 
+			  	</ul>
+			  	<form class="text-center" action="/fillNews" method="post" >
+ 				 	<button class="btn btn-link center" type="Submit" value="Submit"> <u>In the News</u> </button>
+ 				<% if (data[0].stories!== null){ %>
+	 				<ul class="list-unstyled">
+	 					<% for (let i=0; i<data[0].stories.length; i++){%>
+	 						<li> <a href=<%=data[0].stories[i].url%>><%=data[0].stories[i].title%> </a> </li>
+	 					<%} %>
+	 				</ul>
+	 			<%}%>
+	 			</form>
+		  </div>
+		  <div class="col border" name="rep2">
+		  	<h4 class="text-center"> <%= data[1].title; %> </h4> <br> 
+		  	<% if (typeof data[1].pic !== 'undefined'){  %>
+		  		<img src=<%= data[1].pic;%> alt="Portrait of this representative" class="rounded mx-auto d-block img-fluid"> 
+		  	<% } %>
+		  	<% if (typeof data[1].pic === 'undefined') {  %>
+		  		<img src="https://3znvnpy5ek52a26m01me9p1t-wpengine.netdna-ssl.com/wp-content/uploads/2017/07/noimage_person.png" alt ="Default avatar picture" class="rounded mx-auto d-block img-fluid" height="60%" width="60%">
+		 	<% } %>
+		  	<br><h5 class="text-center"> <%= data[1].name; %>, <%= data[1].party; %> </h5>  
+			  	<ul class="list-inline text-center"> 
+					<li class="list-inline-item"> Contact Information:</li>
+			  		<% if (data[1].phones.length > 0){ %>
+			  			<li class="list-inline-item">|<%=data[1].phones[0]%>|</li>
+			  		<% } %> 
+			  		<% if (typeof data[1].email !== 'undefined'){ %>
+			  			<li class="list-inline-item">|<%= data[1].email %>|</li>
+			  		<% } %> 
+			  		<% if (typeof data[1].social !== 'undefined'){ %>
+			  		<%	const fb = "https://Facebook.com/"; %>
+			  		<%	const youtube = "https://www.youtube.com/user/"; %>
+			  		<%	const twitter = "https://twitter.com/"; %>
+			  		<%	let url; %>
+			  		<%	for (let i=0; i < data[1].social.length; i++){ %>
+			  		<%		console.log(data[1].social[i])%>
+			  		<%		if (data[01].social[i].type == 'Facebook'){ %>
+			  		<%			url = fb + data[01].social[i].id; %>
+			  						<li class="list-inline-item">
+			  							<a href=<%=url%>>
+			  						 	<img src='../public/img/fb.svg' class="image-fluid" height="32px" width="32px" alt="Image of Facebook logo"/></a>
+			  						</li>
+			  		<%		} %>
+			  		<%		if (data[1].social[i].type == 'Twitter'){ %>
+			  		<%			url = twitter + data[1].social[i].id; %>
+			  						<li class="list-inline-item">
+			  							<a href=<%=url%>>
+			  						 	<img src='../public/img/twitter.svg' class="image-fluid" height="32px" width="32px" alt="Image of Twitter logo"/></a>
+			  						</li>
+			  		<%		} %>
+			  		<%		if (data[1].social[i].type == 'Youtube'){ %>
+			  		<%			url = youtube + data[1].social[i].id; %>
+			  						<li class="list-inline-item">
+			  							<a href=<%=url%>>
+			  						 	<img src='../public/img/yt.svg' class="image-fluid" height="32px" width="32px" alt="Image of Youtube logo"/></a>
+			  						</li>
+			  		<%		} %>
+			  		<% } %> 
+			  	<% } %> 
+			  	</ul>
+			  	<form class="text-center" action="/fillNews" method="post" >
+ 				 	<button class="btn btn-link center" type="Submit" value="Submit"> <u>In the News</u> </button>
+ 				<% if (data[1].stories!== null){ %>
+	 				<ul class="list-unstyled">
+	 					<% for (let i=0; i<data[1].stories.length; i++){%>
+	 						<li> <a href=<%=data[1].stories[i].url%>><%=data[1].stories[i].title%> </a> </li>
+	 					<%} %>
+	 				</ul>
+	 			<%}%>
+	 			</form>
+		  </div>		  
+		  <div class="col border" name="rep3">	  	
+		  	<h4 class="text-center"> <%= data[2].title; %> </h4> <br> 
+		  	<% if (typeof data[2].pic !== 'undefined'){  %>
+		  		<img src=<%= data[2].pic;%> alt="Portrait of this representative" class="rounded mx-auto d-block img-fluid"> 
+		  	<% } %>
+		  	<% if (typeof data[2].pic === 'undefined') {  %>
+		  		<img src="https://3znvnpy5ek52a26m01me9p1t-wpengine.netdna-ssl.com/wp-content/uploads/2017/07/noimage_person.png" alt ="Default avatar picture" class="rounded mx-auto d-block img-fluid" height="60%" width="60%">
+		 	<% } %>
+		  	<br><h5 class="text-center"> <%= data[2].name; %>, <%= data[2].party; %> </h5>  
+			  	<ul class="list-inline text-center"> 
+					<li class="list-inline-item"> Contact Information:</li>
+			  		<% if (data[2].phones.length > 0){ %>
+			  			<li class="list-inline-item">|<%= data[2].phones[0] %>|</li>
+			  		<% } %> 
+			  		<% if (typeof data[2].email !== 'undefined'){ %>
+			  			<li class="list-inline-item">|<%= data[2].email %>|</li>
+			  		<% } %> 
+			  		<% if (typeof data[2].social !== 'undefined'){ %>
+			  		<%	const fb = "https://Facebook.com/"; %>
+			  		<%	const youtube = "https://www.youtube.com/user/"; %>
+			  		<%	const twitter = "https://twitter.com/"; %>
+			  		<%	let url; %>
+			  		<%	for (let i=0; i < data[2].social.length; i++){ %>
+			  		<%		console.log(data[2].social[i])%>
+			  		<%		if (data[2].social[i].type == 'Facebook'){ %>
+			  		<%			url = fb + data[2].social[i].id; %>
+			  						<li class="list-inline-item">
+			  							<a href=<%=url%>>
+			  						 	<img src='../public/img/fb.svg' class="image-fluid" height="32px" width="32px" alt="Image of Facebook logo"/></a>
+			  						</li>
+			  		<%		} %>
+			  		<%		if (data[2].social[i].type == 'Twitter'){ %>
+			  		<%			url = twitter + data[2].social[i].id; %>
+			  						<li class="list-inline-item">
+			  							<a href=<%=url%>>
+			  						 	<img src='../public/img/twitter.svg' class="image-fluid" height="32px" width="32px" alt="Image of Twitter logo"/></a>
+			  						</li>
+			  		<%		} %>
+			  		<%		if (data[2].social[i].type == 'Youtube'){ %>
+			  		<%			url = youtube + data[2].social[i].id; %>
+			  						<li class="list-inline-item">
+			  							<a href=<%=url%>>
+			  						 	<img src='../public/img/yt.svg' class="image-fluid" height="32px" width="32px" alt="Image of Youtube logo"/></a>
+			  						</li>
+			  		<%		} %>
+			  		<% } %> 
+			  	<% } %> 
+			  	</ul>
+			  	<form class="text-center" action="/fillNews" method="post" >
+ 				 	<button class="btn btn-link center" type="Submit" value="Submit"> <u>In the News</u> </button>
+ 				<% if (data[2].stories!== null){ %>
+	 				<ul class="list-unstyled">
+	 					<% for (let i=0; i<data[2].stories.length; i++){%>
+	 						<li> <a href=<%=data[2].stories[i].url%>><%=data[2].stories[i].title%> </a> </li>
+	 					<%} %>
+	 				</ul>
+	 			<%}%>
+	 			</form>
+		  </div>
+		  <div class="w-100">
+		  	
+		  </div>
+		  <div class="col border" name="rep4">	  	
+		  	<h4 class="text-center"> <%= data[3].title; %> </h4> <br> 
+		  	<% if (typeof data[3].pic !== 'undefined'){  %>
+		  		<img src=<%= data[3].pic;%> alt="Portrait of this representative" class="rounded mx-auto d-block img-fluid"> 
+		  	<% } %>
+		  	<% if (typeof data[3].pic === 'undefined') {  %>
+		  		<img src="https://3znvnpy5ek52a26m01me9p1t-wpengine.netdna-ssl.com/wp-content/uploads/2017/07/noimage_person.png" alt ="Default avatar picture" class="rounded mx-auto d-block img-fluid" height="60%" width="60%">
+		 	<% } %>
+		  	<br><h5 class="text-center"> <%= data[3].name; %>, <%= data[3].party; %> </h5>  
+			  	<ul class="list-inline text-center"> 
+					<li class="list-inline-item"> Contact Information:</li>
+			  		<% if (data[3].phones.length > 0){ %>
+			  			<li class="list-inline-item">|<%= data[3].phones[0] %>|</li>
+			  		<% } %> 
+			  		<% if (typeof data[3].email !== 'undefined'){ %>
+			  			<li class="list-inline-item">|<%=data[3].email %>|</li>
+			  		<% } %> 
+			  		<% if (typeof data[3].social !== 'undefined'){ %>
+			  		<%	const fb = "https://Facebook.com/"; %>
+			  		<%	const youtube = "https://www.youtube.com/user/"; %>
+			  		<%	const twitter = "https://twitter.com/"; %>
+			  		<%	let url; %>
+			  		<%	for (let i=0; i < data[3].social.length; i++){ %>
+			  		<%		console.log(data[3].social[i])%>
+			  		<%		if (data[3].social[i].type == 'Facebook'){ %>
+			  		<%			url = fb + data[3].social[i].id; %>
+			  						<li class="list-inline-item">
+			  							<a href=<%=url%>>
+			  						 	<img src='../public/img/fb.svg' class="image-fluid" height="32px" width="32px" alt="Image of Facebook logo"/></a>
+			  						</li>
+			  		<%		} %>
+			  		<%		if (data[3].social[i].type == 'Twitter'){ %>
+			  		<%			url = twitter + data[3].social[i].id; %>
+			  						<li class="list-inline-item">
+			  							<a href=<%=url%>>
+			  						 	<img src='../public/img/twitter.svg' class="image-fluid" height="32px" width="32px" alt="Image of Twitter logo"/></a>
+			  						</li>
+			  		<%		} %>
+			  		<%		if (data[3].social[i].type == 'Youtube'){ %>
+			  		<%			url = youtube + data[3].social[i].id; %>
+			  						<li class="list-inline-item">
+			  							<a href=<%=url%>>
+			  						 	<img src='../public/img/yt.svg' class="image-fluid" height="32px" width="32px" alt="Image of Youtube logo"/></a>
+			  						</li>
+			  		<%		} %>
+			  		<% } %> 
+			  	<% } %> 
+			  	</ul>
+			  	<form class="text-center" action="/fillNews" method="post" >
+ 				 	<button class="btn btn-link center" type="Submit" value="Submit"> <u>In the News</u> </button>
+ 				<% if (data[3].stories!== null){ %>
+	 				<ul class="list-unstyled">
+	 					<% for (let i=0; i<data[3].stories.length; i++){%>
+	 						<li> <a href=<%=data[3].stories[i].url%>><%=data[3].stories[i].title%> </a> </li>
+	 					<%} %>
+	 				</ul>
+	 			<%}%>
+	 			</form>
+		  </div>		  <div class="col border" name="rep5">	  	
+		  	<h4 class="text-center"> <%= data[4].title; %> </h4> <br> 
+		  	<% if (typeof data[4].pic !== 'undefined'){  %>
+		  		<img src=<%= data[4].pic;%> alt="Portrait of this representative" class="rounded mx-auto d-block img-fluid"> 
+		  	<% } %>
+		  	<% if (typeof data[4].pic === 'undefined') {  %>
+		  		<img src="https://3znvnpy5ek52a26m01me9p1t-wpengine.netdna-ssl.com/wp-content/uploads/2017/07/noimage_person.png" alt ="Default avatar picture" class="rounded mx-auto d-block img-fluid" height="60%" width="60%">
+		 	<% } %>
+		  	<br><h5 class="text-center"><%= data[4].name; %>, <%= data[4].party; %> </h5>  
+			  	<ul class="list-inline text-center"> 
+					<li class="list-inline-item"> Contact Information:</li>
+			  		<% if (data[4].phones.length > 0){ %>
+			  			<li class="list-inline-item">|<%= data[4].phones[0] %>|</li>
+			  		<% } %> 
+			  		<% if (typeof data[4].email !== 'undefined'){ %>
+			  			<li class="list-inline-item">|<%= data[4].email %>|</li>
+			  		<% } %> 
+			  		<% if (typeof data[4].social !== 'undefined'){ %>
+			  		<%	const fb = "https://Facebook.com/"; %>
+			  		<%	const youtube = "https://www.youtube.com/user/"; %>
+			  		<%	const twitter = "https://twitter.com/"; %>
+			  		<%	let url; %>
+			  		<%	for (let i=0; i < data[4].social.length; i++){ %>
+			  		<%		console.log(data[4].social[i])%>
+			  		<%		if (data[4].social[i].type == 'Facebook'){ %>
+			  		<%			url = fb + data[4].social[i].id; %>
+			  						<li class="list-inline-item">
+			  							<a href=<%=url%>>
+			  						 	<img src='../public/img/fb.svg' class="image-fluid" height="32px" width="32px" alt="Image of Facebook logo"/></a>
+			  						</li>
+			  		<%		} %>
+			  		<%		if (data[4].social[i].type == 'Twitter'){ %>
+			  		<%			url = twitter + data[4].social[i].id; %>
+			  						<li class="list-inline-item">
+			  							<a href=<%=url%>>
+			  						 	<img src='../public/img/twitter.svg' class="image-fluid" height="32px" width="32px" alt="Image of Twitter logo"/></a>
+			  						</li>
+			  		<%		} %>
+			  		<%		if (data[4].social[i].type == 'Youtube'){ %>
+			  		<%			url = youtube + data[4].social[i].id; %>
+			  						<li class="list-inline-item">
+			  							<a href=<%=url%>>
+			  						 	<img src='../public/img/yt.svg' class="image-fluid" height="32px" width="32px" alt="Image of Youtube logo"/></a>
+			  						</li>
+			  		<%		} %>
+			  		<% } %> 
+			  	<% } %> 
+			  	</ul>
+			  	<form class="text-center" action="/fillNews" method="post" >
+ 				 	<button class="btn btn-link center" type="Submit" value="Submit"> <u>In the News</u> </button>
+ 				<% if (data[4].stories!== null){ %>
+	 				<ul class="list-unstyled">
+	 					<% for (let i=0; i<data[4].stories.length; i++){%>
+	 						<li> <a href=<%=data[4].stories[i].url%>><%=data[4].stories[i].title%> </a> </li>
+	 					<%} %>
+	 				</ul>
+	 			<%}%>
+	 			</form>
+		  </div>		  
+		  <div class="col border" name="rep6">	  	
+		  	<h4 class="text-center"> <%= data[5].title; %> </h4> <br> 
+		  	<% if (typeof data[5].pic !== 'undefined'){  %>
+		  		<img src=<%= data[5].pic;%> alt="Portrait of this representative" class="rounded mx-auto d-block img-fluid"> 
+		  	<% } %>
+		  	<% if (typeof data[5].pic === 'undefined') {  %>
+		  		<img src="https://3znvnpy5ek52a26m01me9p1t-wpengine.netdna-ssl.com/wp-content/uploads/2017/07/noimage_person.png" alt ="Default avatar picture" class="rounded mx-auto d-block img-fluid" height="60%" width="60%">
+		 	<% } %>
+		  	<br><h5 class="text-center"> <%= data[5].name; %>, <%= data[5].party; %> </h5>  
+			  	<ul class="list-inline text-center"> 
+					<li class="list-inline-item"> Contact Information:</li>
+			  		<% if (data[5].phones.length > 0){ %>
+			  			<li class="list-inline-item">|<%= data[5].phones[0] %>|</li>
+			  		<% } %> 
+			  		<% if (typeof data[5].email !== 'undefined'){ %>
+			  			<li class="list-inline-item">|<%= data[5].email %>|</li>
+			  		<% } %> 
+			  		<% if (typeof data[5].social !== 'undefined'){ %>
+			  		<%	const fb = "https://Facebook.com/"; %>
+			  		<%	const youtube = "https://www.youtube.com/user/"; %>
+			  		<%	const twitter = "https://twitter.com/"; %>
+			  		<%	let url; %>
+			  		<%	for (let i=0; i < data[5].social.length; i++){ %>
+			  		<%		console.log(data[5].social[i])%>
+			  		<%		if (data[5].social[i].type == 'Facebook'){ %>
+			  		<%			url = fb + data[5].social[i].id; %>
+			  						<li class="list-inline-item">
+			  							<a href=<%=url%>>
+			  						 	<img src='../public/img/fb.svg' class="image-fluid" height="32px" width="32px" alt="Image of Facebook logo"/></a>
+			  						</li>
+			  		<%		} %>
+			  		<%		if (data[5].social[i].type == 'Twitter'){ %>
+			  		<%			url = twitter + data[5].social[i].id; %>
+			  						<li class="list-inline-item">
+			  							<a href=<%=url%>>
+			  						 	<img src='../public/img/twitter.svg' class="image-fluid" height="32px" width="32px" alt="Image of Twitter logo"/></a>
+			  						</li>
+			  		<%		} %>
+			  		<%		if (data[5].social[i].type == 'Youtube'){ %>
+			  		<%			url = youtube + data[5].social[i].id; %>
+			  						<li class="list-inline-item">
+			  							<a href=<%=url%>>
+			  						 	<img src='../public/img/yt.svg' class="image-fluid" height="32px" width="32px" alt="Image of Youtube logo"/></a>
+			  						</li>
+			  		<%		} %>
+			  		<% } %> 
+			  	<% } %> 
+			  	</ul>
+			  	<form class="text-center" action="/fillNews" method="post" >
+ 				 	<button class="btn btn-link center" type="Submit" value="Submit"> <u>In the News</u> </button>
+ 				<% if (data[5].stories!== null){ %>
+	 				<ul class="list-unstyled">
+	 					<% for (let i=0; i<data[5].stories.length; i++){%>
+	 						<li> <a href=<%=data[5].stories[i].url%>><%=data[5].stories[i].title%> </a> </li>
+	 					<%} %>
+	 				</ul>
+	 			<%}%>
+	 			</form>
+		  </div>
+	</div>
+</div>
+</body>
+<footer class="footer"> 
+	<p class="text-center "><a class="text-body" href="https://github.com/Jurena/Dynamic-Web-Apps/tree/master/Stay%20Engaged">By Joel Urena</a></p>
+</footer>
+</html>

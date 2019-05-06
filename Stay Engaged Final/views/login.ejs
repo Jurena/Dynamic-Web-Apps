@@ -1,0 +1,55 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Stay Engaged</title>
+  <meta name="description" content="A site to help you understand who your representatives are!">
+  <meta name="author" content="Joel Urena">
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<style>
+		footer {
+			padding-top: 0px; 
+			margin-top: 0%;
+			padding-bottom: 0px;
+			position: relative;
+			bottom: 0px; 
+		 	margin-bottom: 0px;
+		}
+		@font-face {
+			font-family: Public;
+			src: url(../public/font/PublicSans-Regular.woff);
+		}
+		body {
+  			font-family:Public;
+		}	
+
+	</style>
+
+
+</head>
+<!--Site Header -->
+<div class="card text-center">
+	<div class="card-body">
+	  <h1 class="card-title title-text"><a class="text-body" href="./">Stay Engaged</a></h1>
+	      <p class="card-text">Helping You Understand Who Represents You.</p>
+	</div>
+</div>
+<body class="container-fluid text-center"> 
+	<h3>To Find Your Reps, Type in your Address </h3> 
+	 <form action="/signin" method="post" class="container-fluid form-group">
+	 	Street Address: <input class="form-control" type = "text" name = "address" placeholder="Address"> <br> 
+	 	City: <input type = "text" name = "City" placeholder="City" class="form-control"> <br>
+	 	State: <input type = "text" name = "State" placeholder="Proper State Abbreviation" class="form-control"> <br>
+	 	Zip Code: <input type = "text" name = "zip" placeholder="Zip Code" class="form-control"> <br> 
+		<input class="btn btn-light" type="submit" value="Submit">
+		<%if (err !== null){%>
+			<p class="text-center"> <%=err%> </p>
+		<%}%>
+	</form>
+</body>
+<footer class="footer text-center"> 
+	<p><a class="text-body" href="https://github.com/Jurena/Dynamic-Web-Apps/tree/master/Stay%20Engaged">By Joel Urena</a></p>
+</footer>
+</html>
